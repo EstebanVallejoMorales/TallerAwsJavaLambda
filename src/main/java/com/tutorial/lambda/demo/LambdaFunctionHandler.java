@@ -15,15 +15,14 @@ public class LambdaFunctionHandler implements RequestHandler<Request, Object> {
 	@Override
 	public Object handleRequest(Request request, Context context) {
 		// TODO Auto-generated method stub
-		//context.getLogger().log("Nombre: " + name);
-		
+				
 		AmazonDynamoDB dynamoDbClient = AmazonDynamoDBClientBuilder.defaultClient();
 		DynamoDBMapper dynamoMapper = new DynamoDBMapper(dynamoDbClient);
 		Product product = null;
 		
 		switch (request.getHttpMethod()) {
 		case "GET":
-			if(request.getId()==0) {
+			if(request.getId()==null) {
 				List<Product> products = new ArrayList<>();
 				products = dynamoMapper.scan(Product.class, new DynamoDBScanExpression());
 				return products;
